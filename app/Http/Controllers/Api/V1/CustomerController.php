@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
-use Illuminate\http\Request;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use  app\Http\Resources\V1\CustomerResource;
+use App\Http\Resources\V1\CustomerResource;
+use App\Http\Resources\V1\CustomerCollection;
+
+
 
 class CustomerController extends Controller
 {
@@ -17,9 +20,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        // Return all customer information
-        return Customer::all();
+        // Return all customer information- Transfer the data in Nice 
+        return new CustomerCollection(Customer::paginate());   //Returs this in page format
     }
+
+
 
     /**
      * Show the form for creating a new resource.
