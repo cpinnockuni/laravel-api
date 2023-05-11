@@ -8,6 +8,7 @@ use App\Models\Customer;
 use Illuminate\http\Request;
 use App\Http\Controllers\Controller;
 
+use  app\Http\Resources\V1\CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -16,8 +17,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //Return back all the customer information
-
+        // Return all customer information
         return Customer::all();
     }
 
@@ -42,8 +42,9 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return new CustomerResource($customer);
     }
+
 
     /**
      * Show the form for editing the specified resource.
