@@ -19,9 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' =>'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function() {
+//Ensure the endpoints are not case senstive so can query
 
-Route::apiResource('customers', CustomerController::class);
-
-Route::apiResource('invoices', InvoiceController::class);
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'case_sensitive' => false], function () {
+    Route::apiResource('customers', CustomerController::class);
+    Route::apiResource('Customers', CustomerController::class);
+    Route::apiResource('CUSTOMERS', CustomerController::class);
+    Route::apiResource('invoices', InvoiceController::class);
+    Route::apiResource('INVOICES', InvoiceController::class);
+    Route::apiResource('Invoices', InvoiceController::class);
 });

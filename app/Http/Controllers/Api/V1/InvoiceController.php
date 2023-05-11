@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Http\Resources\V1\InvoiceCollection;
 
+use App\Http\Filtering\V1\InvoiceFilter;
+
 class InvoiceController extends Controller
 {
     /**

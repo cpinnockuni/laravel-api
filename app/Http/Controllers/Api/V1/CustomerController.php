@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\V1\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CustomerResource;
 use App\Http\Resources\V1\CustomerCollection;
-use App\Http\Services\V1\CustomerQuery;
+use App\Http\Filtering\V1\CustomerFilter;
+
+
+
 
 class CustomerController extends Controller
 {
@@ -18,7 +21,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = new CustomerQuery();
+        $filter = new CustomerFilter();
         $queryItems = $filter->transform($request);
 
         if (count($queryItems) == 0) {
@@ -33,7 +36,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+    
     }
 
     /**
