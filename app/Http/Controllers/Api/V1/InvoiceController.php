@@ -11,6 +11,11 @@ use App\Http\Resources\V1\InvoiceResource;
 use App\Http\Resources\V1\InvoiceCollection;
 
 use App\Http\Filtering\V1\InvoiceFilter;
+use App\Http\Requests\BulkStoreInvoiceRequest;
+
+
+
+use Illuminate\support\Arr;
 
 class InvoiceController extends Controller
 {
@@ -25,10 +30,7 @@ class InvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+ 
 
     /**
      * Store a newly created resource in storage.
