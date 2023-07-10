@@ -22,6 +22,9 @@ class StoreCustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
+
         return [
             'name' => ['required'],
             'type' => ['required', Rule::in(['I', 'B', 'i', 'b'])],
@@ -34,9 +37,16 @@ class StoreCustomerRequest extends FormRequest
     }
 
     protected function prepareForValidation()
-    {
+
+    {   
+
+        if ($this->postalCode) {
+
+        
         $this->merge([
             'postal_code' => $this->postalCode
         ]);
+
+    }
     }
 }

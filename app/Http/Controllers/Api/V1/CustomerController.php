@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\V1\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\V1\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -44,7 +44,14 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        return new CustomerResource(Customer::create($request->all()));
+        $customer = Customer::create($request->all());
+    
+    // Return the customer resource as JSON
+          return response()->json(new CustomerResource($customer), 200);
+  
+  
+  
+  
     }
 
     /**
@@ -68,11 +75,12 @@ class CustomerController extends Controller
      */
 
      //Dels with all the customer put or Patch Request
-    public function update(UpdateCustomerRequest $request, Customer $customer)
-    {
-       $customer->update($request);
-    }
-
+     public function update(UpdateCustomerRequest $request, Customer $customer)
+     {
+         $customer->update($request->all());
+         return response()->json(['message' => 'Customer updated successfully']);
+     }
+     
 
 public function destroy(Customer $customer)
 {

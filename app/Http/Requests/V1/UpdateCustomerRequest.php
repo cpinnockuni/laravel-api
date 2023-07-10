@@ -5,10 +5,12 @@ namespace App\Http\Requests\V1;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreCustomerRequest extends FormRequest
+class UpdateCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -18,44 +20,48 @@ class StoreCustomerRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        //This is to deal with a Put Request--Which is Updating everything
-
         $method = $this->method();
-        if ($method == "PUT") {
-        
-        
-        return [
-            'name' => ['required'],
-            'type' => ['required', Rule::in(['I', 'B', 'i', 'b'])],
-            'email' => ['required', 'email'],
-            'address' => ['required'],
-            'city' => ['required'],
-            'state' => ['required'],
-            'postalCode' => ['required'],
-        ];
 
-    } else {
-        return [
-            'name' => ['sometimes','required'],
-            'type' => ['sometimes','required', Rule::in(['I', 'B', 'i', 'b'])],
-            'email' => ['sometimes','required', 'email'],
-            'address' => ['sometimes','required'],
-            'city' => ['sometimes','required'],
-            'state' => ['sometimes','required'],
-            'postalCode' => ['sometimes','required'],
-        ];
-
+        // This is to deal with a PUT request, which is for updating everything
+        if ($method === 'PUT') {
+            return [
+                'name' => ['required'],
+                'type' => ['required', Rule::in(['I', 'B', 'i', 'b'])],
+                'email' => ['required', 'email'],
+                'address' => ['required'],
+                'city' => ['required'],
+                'state' => ['required'],
+                'postalCode' => ['required'],
+            ];
+        } else {
+            // Validation rules for other request methods (e.g., POST, PATCH)
+            return [
+                'name' => ['sometimes', 'required'],
+                'type' => ['sometimes', 'required', Rule::in(['I', 'B', 'i', 'b'])],
+                'email' => ['sometimes', 'required', 'email'],
+                'address' => ['sometimes', 'required'],
+                'city' => ['sometimes', 'required'],
+                'state' => ['sometimes', 'required'],
+                'postalCode' => ['sometimes', 'required'],
+            ];
+        }
     }
-    }
 
-    protected function prepareForValidation()
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
     {
-        $this->merge([
-            'postal_code' => $this->postalCode
-        ]);
+        if ($this->postalCode) {
+            $this->merge([
+                'postalCode' => $this->postalCode,
+            ]);
+        }
     }
 }
