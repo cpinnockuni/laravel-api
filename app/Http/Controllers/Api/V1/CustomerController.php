@@ -36,7 +36,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-    
+    //Don't need
     }
 
     /**
@@ -44,7 +44,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        return new CustomerResource(Customer::create($request->all()));
     }
 
     /**
@@ -66,16 +66,18 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+     //Dels with all the customer put or Patch Request
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+       $customer->update($request);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Customer $customer)
-    {
-        //
-    }
+
+public function destroy(Customer $customer)
+{
+    $customer->delete();
+    return response()->json(['message' => 'Customer deleted successfully']);
+}
+
 }
